@@ -2,15 +2,17 @@
   "success": "Thành công",
   "server_error": "Lỗi hệ thống",
   "validation_error": "Dữ liệu đầu vào không hợp lệ",
-
   "user_created": "Tạo tài khoản thành công",
   "spam_detected": "Bạn thao tác quá nhanh, vui lòng thử lại sau.",
   "auth_required": "Vui lòng đăng nhập để thực hiện.",
-
   "val_missing": "Trường này là bắt buộc",
   "val_string_too_short": "Nội dung quá ngắn",
   "val_value_error.email": "Email không đúng định dạng",
-
   "email_exists": "Email này đã được đăng ký",
-  "user_not_found": "Không tìm thấy người dùng"
+  "user_not_found": "Không tìm thấy người dùng",
+  "google_auth_failed": "Xác thực Google thất bại. Vui lòng thử lại.",
+  "invalid_token": "Token xác thực không hợp lệ.",
+  "email_not_found": "Email này chưa được đăng ký trong hệ thống",
+  "wrong_password": "Mật khẩu không chính xác",
+  "invalid_otp": "Mã xác thực không chính xác hoặc đã hết hạn."
 }
