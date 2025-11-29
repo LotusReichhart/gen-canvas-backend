@@ -3,7 +3,7 @@ import os
 from typing import Dict
 from loguru import logger
 
-from src.core.common.logger import setup_logging
+from .logger import setup_logging
 
 setup_logging()
 

@@ -1,0 +1,58 @@
+from loguru import logger
+
+from src.core.common.constants import MsgKey
+from src.core.common.exceptions import BusinessException
+from src.core.common.logger import setup_logging
+
+from ...service.cache_otp_service import CacheOtpService
+from ...service.generate_otp_service import GenerateOtpService
+from ...service.mail_service import MailService
+
+setup_logging()
+
+
+class ResendOTPUseCase:
+    def __init__(self,
+                 generate_otp_service: GenerateOtpService,
+                 cache_otp_service: CacheOtpService,
+                 mail_service: MailService):
+        self._generate_otp_service = generate_otp_service
+        self._cache_otp_service = cache_otp_service
+        self._mail_service = mail_service
+
+    async def execute(self, email: str):
+        allowed = await self._cache_otp_service.check_and_increment_limit(email)
+        if not allowed:
+            raise BusinessException(
+                message_key=MsgKey.SPAM_DETECTED,
+                status_code=429
+            )
+
+        otp = self._generate_otp_service.generate_otp()
+        success = await self._cache_otp_service.update_otp(email, otp)
+        if not success:
+            logger.warning(f"Failed to update OTP for {email}. Session might be expired.")
+            raise BusinessException(
+                message_key=MsgKey.SERVER_ERROR,
+                status_code=500
+            )
+
+        template = self._mail_service.build_otp_template(otp)
+
+        try:
+            await self._mail_service.send_mail(
+                to=email,
+                subject=template["subject"],
+                html=template["html"],
+            )
+
+        except BusinessException:
+            raise
+
+        except Exception as e:
+            logger.exception(f"ResendOTPUseCase error for email {e}")
+
+            raise BusinessException(
+                message_key=MsgKey.SERVER_ERROR,
+                status_code=500
+            )
