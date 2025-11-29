@@ -1,0 +1,16 @@
+{
+  "success": "Success",
+  "server_error": "Internal Server Error",
+  "validation_error": "Invalid input data",
+
+  "user_created": "User created successfully",
+  "spam_detected": "Too many requests. Please try again later.",
+  "auth_required": "Authentication required.",
+
+  "val_missing": "Field required",
+  "val_string_too_short": "String too short",
+  "val_value_error.email": "Invalid email format",
+
+  "email_exists": "Email already exists",
+  "user_not_found": "User not found"
+}
