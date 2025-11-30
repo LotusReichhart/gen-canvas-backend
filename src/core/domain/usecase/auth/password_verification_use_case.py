@@ -2,14 +2,10 @@ from loguru import logger
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
 from ...service.cache_otp_service import CacheOtpService
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
-
-setup_logging()
-
 
 class PasswordVerificationUseCase:
     def __init__(self,

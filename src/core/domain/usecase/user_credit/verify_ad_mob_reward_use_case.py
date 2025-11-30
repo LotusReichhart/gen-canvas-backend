@@ -4,14 +4,11 @@ from typing import Any
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 from src.core.model.user.credit_transaction import CreditTransaction
 from src.core.model.user.enums.credit_transaction_source import CreditTransactionSource
 
 from ...repository.unit_of_work import UnitOfWork
 from ...service.ad_mob_verification_service import AdMobVerificationService
-
-setup_logging()
 
 
 class VerifyAdMobRewardUseCase:

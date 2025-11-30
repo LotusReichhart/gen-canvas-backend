@@ -2,15 +2,12 @@ from loguru import logger
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
 from ...repository.user_repository import UserRepository
 from ...service.cache_otp_service import CacheOtpService
 from ...service.generate_otp_service import GenerateOtpService
 from ...service.mail_service import MailService
 from ...service.password_hasher_service import PasswordHasherService
-
-setup_logging()
 
 
 class RequestSignupUseCase:
