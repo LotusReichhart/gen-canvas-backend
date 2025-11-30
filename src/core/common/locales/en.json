@@ -16,5 +16,8 @@
   "invalid_token": "Invalid authentication token.",
   "email_not_found": "This email is not registered",
   "wrong_password": "Incorrect password",
-  "invalid_otp": "Invalid or expired OTP."
+  "invalid_otp": "Invalid or expired OTP.",
+  "file_too_large": "File size too large (Max 5MB).",
+  "file_empty": "The file is empty or invalid.",
+  "upload_failed": "File upload failed. Please try again."
 }

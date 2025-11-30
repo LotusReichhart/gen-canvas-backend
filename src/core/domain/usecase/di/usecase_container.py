@@ -5,7 +5,7 @@ from ..user.get_user_profile_use_case import GetUserProfileUseCase
 
 class UseCaseContainer(containers.DeclarativeContainer):
     repository_container = providers.DependenciesContainer()
-    # gateways_container = providers.DependenciesContainer()
+    external_service_container = providers.DependenciesContainer()
 
     # --- Auth Use Cases ---
 

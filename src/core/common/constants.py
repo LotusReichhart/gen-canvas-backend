@@ -24,6 +24,10 @@ class MsgKey(str, Enum):
     USER_NOT_FOUND = "user_not_found"
     USER_CREDIT_NOT_FOUND = "user_credit_not_found"
 
+    FILE_TOO_LARGE = "file_too_large"
+    FILE_EMPTY = "file_empty"
+    UPLOAD_FAILED = "upload_failed"
+
     # Errors (Validation generic)
     VALIDATION_ERROR = "validation_error"
     SERVER_ERROR = "server_error"

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional, Dict
 
 
 class CacheOtpService(ABC):
@@ -7,19 +8,19 @@ class CacheOtpService(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def save_signup_otp(self, email: str, otp: str, name: str, password: str):
+    async def save_signup_otp(self, email: str, otp: str, name: str, password: str) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    async def save_forgot_otp(self, email: str, otp: str, user_id: int):
+    async def save_forgot_otp(self, email: str, otp: str, user_id: int) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    async def verify_signup_otp(self, email: str, otp: str) -> dict[str, str]:
+    async def verify_signup_otp(self, email: str, otp: str) -> Optional[Dict]:
         raise NotImplementedError
 
     @abstractmethod
-    async def verify_forgot_otp(self, email: str, otp: str) -> dict[str, str]:
+    async def verify_forgot_otp(self, email: str, otp: str) -> Optional[Dict]:
         raise NotImplementedError
 
     @abstractmethod
