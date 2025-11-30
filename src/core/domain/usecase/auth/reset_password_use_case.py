@@ -25,8 +25,8 @@ class ResetPasswordUseCase:
             token_data = await self._cache_token_service.verify_reset_token(reset_token)
             if not token_data or not token_data.get("user_id"):
                 raise BusinessException(
-                    message_key=MsgKey.INVALID_TOKEN,
-                    status_code=400
+                    message_key=MsgKey.FORBIDDEN,
+                    status_code=403
                 )
 
             user_id = int(token_data.get("user_id"))
@@ -48,7 +48,7 @@ class ResetPasswordUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"ResetPasswordUseCase error for token {reset_token[:10]}...")
+            logger.exception(f"ResetPasswordUseCase error for token {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,
