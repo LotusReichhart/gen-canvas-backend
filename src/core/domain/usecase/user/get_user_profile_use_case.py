@@ -1,13 +1,10 @@
 from loguru import logger
-from typing import Any
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
+from ...dto.user_dto import UserProfileDTO, UserResponse, UserCreditResponse
 from ...repository.user_repository import UserRepository
-
-setup_logging()
 
 
 class GetUserProfileUseCase:
@@ -15,7 +12,7 @@ class GetUserProfileUseCase:
                  user_repository: UserRepository):
         self.user_repository = user_repository
 
-    async def execute(self, user_id: int) -> dict[str, Any]:
+    async def execute(self, user_id: int) -> UserProfileDTO:
         try:
             user = await self.user_repository.get_user_by_id(user_id)
             if not user:
@@ -23,7 +20,17 @@ class GetUserProfileUseCase:
                     message_key=MsgKey.USER_NOT_FOUND,
                     status_code=404
                 )
-            return {"user": user, "credit": user.credit_account}
+
+            user_response = UserResponse.model_validate(user)
+            credit_response = None
+
+            if user.user_credit:
+                credit_response = UserCreditResponse.model_validate(user.user_credit)
+
+            return UserProfileDTO(
+                user=user_response,
+                credit=credit_response
+            )
         except BusinessException:
             raise
 

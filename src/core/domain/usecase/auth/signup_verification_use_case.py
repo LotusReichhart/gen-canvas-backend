@@ -3,7 +3,6 @@ from datetime import datetime, timezone
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
 from src.core.model.user.enums.auth_provider import AuthProvider
 from src.core.model.user.enums.user_status import UserStatus
@@ -15,8 +14,6 @@ from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_otp_service import CacheOtpService
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
-
-setup_logging()
 
 
 class SignupVerificationUseCase:

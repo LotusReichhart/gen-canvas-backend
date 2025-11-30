@@ -2,13 +2,10 @@ from loguru import logger
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
 from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_token_service import CacheTokenService
 from ...service.password_hasher_service import PasswordHasherService
-
-setup_logging()
 
 
 class ResetPasswordUseCase:

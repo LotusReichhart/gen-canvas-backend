@@ -2,13 +2,11 @@ from loguru import logger
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
 from ...repository.user_repository import UserRepository
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
 
-setup_logging()
 
 
 class RefreshSigninUseCase:

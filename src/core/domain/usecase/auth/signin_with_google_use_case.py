@@ -6,7 +6,6 @@ from google.auth.transport import requests
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 
 from src.core.model.user.user import User
 from src.core.model.user.enums.auth_provider import AuthProvider
@@ -17,8 +16,6 @@ from src.core.model.user.user_credit import UserCredit
 from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
-
-setup_logging()
 
 
 class SignInWithGoogleAuthUseCase:

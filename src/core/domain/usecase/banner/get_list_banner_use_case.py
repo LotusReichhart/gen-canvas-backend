@@ -3,12 +3,9 @@ from typing import List
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.common.logger import setup_logging
 from src.core.model.user.banner import Banner
 
 from ...repository.banner_repository import BannerRepository
-
-setup_logging()
 
 
 class GetListBannerUseCase:
