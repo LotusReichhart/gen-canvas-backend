@@ -17,7 +17,7 @@ class AppLogger:
 
         if settings.ENV == "dev":
             logger.add(
-                sys.stderr,
+                sys.stdout,
                 level="DEBUG",
                 format=log_format,
                 colorize=True,
@@ -26,7 +26,7 @@ class AppLogger:
             )
         else:
             logger.add(
-                sys.stderr,
+                sys.stdout,
                 level="ERROR",
                 format=log_format,
                 colorize=False

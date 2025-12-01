@@ -9,7 +9,7 @@ from .user_repository import UserRepository
 
 class UnitOfWork(ABC):
     user_repository: UserRepository
-    credit_repository: UserCreditRepository
+    user_credit_repository: UserCreditRepository
     credit_transaction_repository: CreditTransactionRepository
     banner_repository: BannerRepository
 

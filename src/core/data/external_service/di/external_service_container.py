@@ -11,7 +11,7 @@ class ExternalServiceContainer(containers.DeclarativeContainer):
 
     redis_client = providers.Singleton(
         RedisClient,
-        url=config.REDIS_URL
+        url=config.redis_url
     )
 
     redis_method = providers.Singleton(

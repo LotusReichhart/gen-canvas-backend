@@ -8,7 +8,7 @@ from ...service.generate_otp_service import GenerateOtpService
 from ...service.mail_service import MailService
 
 
-class ResendOTPUseCase:
+class ResendOtpUseCase:
     def __init__(self,
                  generate_otp_service: GenerateOtpService,
                  cache_otp_service: CacheOtpService,
@@ -17,7 +17,7 @@ class ResendOTPUseCase:
         self._cache_otp_service = cache_otp_service
         self._mail_service = mail_service
 
-    async def execute(self, email: str):
+    async def execute(self, email: str) -> None:
         allowed = await self._cache_otp_service.check_and_increment_limit(email)
         if not allowed:
             raise BusinessException(

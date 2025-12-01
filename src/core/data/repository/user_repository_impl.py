@@ -36,6 +36,9 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             result = await self.session.execute(query)
             user_entity = result.scalar_one_or_none()
 
+            if not user_entity:
+                return None
+
             return UserMapper.to_model(user_entity)
 
         except SQLAlchemyError as e:

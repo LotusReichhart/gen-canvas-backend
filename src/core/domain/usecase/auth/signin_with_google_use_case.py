@@ -1,3 +1,5 @@
+from typing import Dict
+
 from loguru import logger
 from datetime import datetime, timezone
 
@@ -18,7 +20,7 @@ from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
 
 
-class SignInWithGoogleAuthUseCase:
+class SignInWithGoogleUseCase:
     def __init__(self,
                  unit_of_work: UnitOfWork,
                  token_service: TokenService,
@@ -29,7 +31,7 @@ class SignInWithGoogleAuthUseCase:
         self._cache_token_service = cache_token_service
         self._client_id = client_id
 
-    async def execute(self, user_id_token: str) -> dict[str, str]:
+    async def execute(self, user_id_token: str) -> Dict[str, str]:
         try:
             idinfo = id_token.verify_oauth2_token(
                 user_id_token, requests.Request(), self._client_id

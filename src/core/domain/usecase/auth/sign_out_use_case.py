@@ -14,7 +14,7 @@ class SignOutUseCase:
         self._uow = unit_of_work
         self._cache_token_service = cache_token_service
 
-    async def execute(self, user_id: int, signin_count: int, sign_out_count: int):
+    async def execute(self, user_id: int, signin_count: int, sign_out_count: int) -> None:
         try:
             async with self._uow as uow:
                 user = await uow.user_repository.get_user_by_id(user_id=user_id)

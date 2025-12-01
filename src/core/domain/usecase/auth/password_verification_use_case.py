@@ -1,3 +1,5 @@
+from typing import Dict
+
 from loguru import logger
 
 from src.core.common.constants import MsgKey
@@ -16,7 +18,7 @@ class PasswordVerificationUseCase:
         self._cache_otp_service = cache_otp_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, email: str, otp: str) -> dict[str, str]:
+    async def execute(self, email: str, otp: str) -> Dict[str, str]:
         try:
             otp_data = await self._cache_otp_service.verify_forgot_otp(email=email, otp=otp)
             if not otp_data:
