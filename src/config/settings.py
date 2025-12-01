@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     APP_VERSION: str
     DEBUG: bool
 
+    API_V1_STR: str = "/v1"
+
     TERMS_OF_SERVICE_VERSION: str
     PRIVACY_POLICY_VERSION: str
     TERMS_URL: str
@@ -48,8 +50,8 @@ class Settings(BaseSettings):
     JWT_ACCESS_SECRET: str
     JWT_REFRESH_SECRET: str
 
-    ACCESS_TOKEN_LIFETIME: ClassVar[timedelta] = timedelta(days=1)
-    REFRESH_TOKEN_LIFETIME: ClassVar[timedelta] = timedelta(days=60)
+    ACCESS_TOKEN_LIFETIME: timedelta = timedelta(days=1)
+    REFRESH_TOKEN_LIFETIME: timedelta = timedelta(days=60)
 
     GOOGLE_CLIENT_ID: str
     ADMOB_PUBLIC_KEY_URL: str
@@ -60,6 +62,12 @@ class Settings(BaseSettings):
     @property
     def database_url(self) -> str:
         return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
+    @computed_field
+    @property
+    def redis_url(self) -> str:
+        auth = f":{self.REDIS_PASSWORD}@" if self.REDIS_PASSWORD else ""
+        return f"redis://{auth}{self.REDIS_HOST}:{self.REDIS_PORT}"
 
     model_config = ConfigDict(
         env_file=dotenv_file,

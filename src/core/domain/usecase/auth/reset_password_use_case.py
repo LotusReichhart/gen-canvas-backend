@@ -17,7 +17,7 @@ class ResetPasswordUseCase:
         self._cache_token_service = cache_token_service
         self._password_hasher_service = password_hasher_service
 
-    async def execute(self, reset_token: str, new_password: str):
+    async def execute(self, reset_token: str, new_password: str) -> None:
         try:
             token_data = await self._cache_token_service.verify_reset_token(reset_token)
             if not token_data or not token_data.get("user_id"):

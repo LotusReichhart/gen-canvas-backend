@@ -34,6 +34,6 @@ class CreditTransactionEntity(Base):
     )
 
     # Quan hệ N-1: CreditTransaction -> Credit
-    credit_account: Mapped["UserCreditEntity"] = relationship(
+    user_credit: Mapped["UserCreditEntity"] = relationship(
         back_populates="transactions"
     )

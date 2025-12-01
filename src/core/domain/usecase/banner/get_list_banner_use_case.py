@@ -3,20 +3,22 @@ from typing import List
 
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
-from src.core.model.user.banner import Banner
 
-from ...repository.banner_repository import BannerRepository
+from ...dto.banner_dto import BannerResponse
+from ...repository.unit_of_work import UnitOfWork
 
 
 class GetListBannerUseCase:
     def __init__(self,
-                 banner_repository: BannerRepository):
-        self.banner_repository = banner_repository
+                 unit_of_work: UnitOfWork):
+        self._uow = unit_of_work
 
-    async def execute(self) -> dict[str, List[Banner]]:
+    async def execute(self) -> List[BannerResponse]:
         try:
-            banners = await self.banner_repository.list_active_banners()
-            return {"banners": banners}
+            async with self._uow as uow:
+                banners = await uow.banner_repository.list_active_banners()
+
+            return [BannerResponse.model_validate(b) for b in banners]
         except BusinessException:
             raise
 

@@ -1,3 +1,5 @@
+from typing import Dict
+
 from loguru import logger
 from datetime import datetime, timezone
 
@@ -27,7 +29,7 @@ class SignupVerificationUseCase:
         self._token_service = token_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, email: str, otp: str) -> dict[str, str]:
+    async def execute(self, email: str, otp: str) -> Dict[str, str]:
         try:
             otp_data = await self._cache_otp_service.verify_signup_otp(email=email, otp=otp)
             if not otp_data:
@@ -53,7 +55,7 @@ class SignupVerificationUseCase:
                 user = await uow.user_repository.create_user(new_user)
 
                 new_user_credit = UserCredit(user_id=user.id, balance=5)
-                await uow.credit_repository.create_user_credit(new_user_credit)
+                await uow.user_credit_repository.create_user_credit(new_user_credit)
 
             refresh_token_data = self._token_service.create_refresh_token(
                 user_id=user.id,
@@ -77,7 +79,10 @@ class SignupVerificationUseCase:
                 token=refresh_token
             )
 
-            return {"access_token": access_token, "refresh_token": refresh_token}
+            return {
+                "access_token": access_token,
+                "refresh_token": refresh_token
+            }
 
         except BusinessException:
             raise

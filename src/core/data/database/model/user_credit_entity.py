@@ -24,11 +24,11 @@ class UserCreditEntity(Base):
 
     # Quan hệ 1-1: Credit -> User
     user: Mapped["UserEntity"] = relationship(
-        back_populates="credit_account"
+        back_populates="user_credit"
     )
 
     # Quan hệ 1-N: Credit -> CreditTransaction
     transactions: Mapped[list["CreditTransactionEntity"]] = relationship(
-        back_populates="credit_account",
+        back_populates="user_credit",
         cascade="all, delete-orphan"
     )

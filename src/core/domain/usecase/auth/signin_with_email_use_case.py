@@ -1,3 +1,5 @@
+from typing import Dict
+
 from loguru import logger
 from datetime import datetime, timezone
 
@@ -11,7 +13,7 @@ from ...service.token_service import TokenService
 
 
 
-class SigninUseCase:
+class SigninWithEmailUseCase:
     def __init__(self,
                  unit_of_work: UnitOfWork,
                  password_hasher_service: PasswordHasherService,
@@ -22,7 +24,7 @@ class SigninUseCase:
         self._token_service = token_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, email: str, password: str) -> dict[str, str]:
+    async def execute(self, email: str, password: str) -> Dict[str, str]:
         try:
             async with self._uow as uow:
                 user = await uow.user_repository.get_user_by_email(email)

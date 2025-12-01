@@ -28,6 +28,24 @@ class MsgKey(str, Enum):
     FILE_EMPTY = "file_empty"
     UPLOAD_FAILED = "upload_failed"
 
+    OTP_SENT = "otp_sent"
+    VERIFY_SUCCESS = "verify_success"
+    PASSWORD_CHANGED = "password_changed"
+
+    VAL_NAME_EMPTY = "val_name_empty"
+    VAL_NAME_TOO_SHORT = "val_name_too_short"
+    VAL_EMAIL_EMPTY = "val_email_empty"
+    VAL_EMAIL_INVALID = "val_email_invalid"
+    VAL_PASSWORD_EMPTY = "val_password_empty"
+    VAL_PASSWORD_TOO_SHORT = "val_password_too_short"
+    VAL_PASSWORD_NO_UPPER = "val_password_no_upper"
+    VAL_PASSWORD_NO_LOWER = "val_password_no_lower"
+    VAL_PASSWORD_NO_DIGIT = "val_password_no_digit"
+    VAL_PASSWORD_NO_SPECIAL = "val_password_no_special"
+    VAL_OTP_EMPTY = "val_otp_empty"
+    VAL_OTP_INVALID = "val_otp_invalid"
+    VAL_UNSAFE_INPUT = "val_unsafe_input"
+
     # Errors (Validation generic)
     VALIDATION_ERROR = "validation_error"
     SERVER_ERROR = "server_error"

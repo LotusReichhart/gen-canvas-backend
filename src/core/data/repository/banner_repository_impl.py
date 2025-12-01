@@ -1,8 +1,7 @@
 from typing import List
 
 from loguru import logger
-from select import select
-from sqlalchemy import asc
+from sqlalchemy import asc, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 

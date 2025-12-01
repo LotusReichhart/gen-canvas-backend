@@ -1,4 +1,6 @@
 from contextlib import asynccontextmanager
+
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base
 
@@ -36,4 +38,9 @@ class PostgresDatabase:
 
     async def create_database(self):
         async with self._engine.begin() as conn:
+            await conn.execute(text("CREATE EXTENSION IF NOT EXISTS unaccent;"))
+            await conn.execute(text("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
             await conn.run_sync(Base.metadata.create_all)
+
+    async def close(self):
+        await self._engine.dispose()
