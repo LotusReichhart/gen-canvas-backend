@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    container_name: gen-canvas-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - .env.development
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ENV=development
+    command: uvicorn src.main:app --host 0.0.0.0 --port 5000 --reload
+
+  database:
+    image: postgres:15
+    container_name: gen-canvas-db
+    restart: always
+    environment:
+      POSTGRES_USER: DevUser
+      POSTGRES_PASSWORD: ThisIsNotTheRealPassword
+      POSTGRES_DB: gen_canvas_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
