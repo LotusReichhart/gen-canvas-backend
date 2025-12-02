@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
 
+from ...dto.auth_dto import TokenResponse
 from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_token_service import CacheTokenService
 from ...service.password_hasher_service import PasswordHasherService
@@ -24,7 +25,7 @@ class SigninWithEmailUseCase:
         self._token_service = token_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, email: str, password: str) -> Dict[str, str]:
+    async def execute(self, email: str, password: str) -> TokenResponse:
         try:
             async with self._uow as uow:
                 user = await uow.user_repository.get_user_by_email(email)
@@ -75,10 +76,10 @@ class SigninWithEmailUseCase:
                 token=refresh_token
             )
 
-            return {
-                "access_token": access_token,
-                "refresh_token": refresh_token
-            }
+            return TokenResponse(
+                access_token=access_token,
+                refresh_token=refresh_token
+            )
 
         except BusinessException:
             raise

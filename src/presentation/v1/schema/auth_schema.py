@@ -30,14 +30,7 @@ class VerifySignupRequest(BaseModel):
 # --- SIGN IN ---
 class SignInRequest(BaseModel):
     email: EmailField
-    password: str
-
-    @model_validator(mode='after')
-    def check_empty(self) -> 'SignInRequest':
-        from src.core.common.constants import MsgKey
-        if not self.password:
-            raise ValueError(MsgKey.VAL_PASSWORD_EMPTY)
-        return self
+    password: PasswordField
 
 
 class RefreshTokenRequest(BaseModel):

@@ -5,6 +5,7 @@ from loguru import logger
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
 
+from ...dto.auth_dto import TokenResponse
 from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
@@ -19,7 +20,7 @@ class RefreshSigninUseCase:
         self._token_service = token_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, refresh_token: str) -> Dict[str, str]:
+    async def execute(self, refresh_token: str) -> TokenResponse:
         try:
             try:
                 payload = self._token_service.verify_refresh_token(token=refresh_token)
@@ -77,7 +78,9 @@ class RefreshSigninUseCase:
             )
             access_token = access_token_data["token"]
 
-            return {"access_token": access_token}
+            return TokenResponse(
+                access_token=access_token
+            )
 
         except BusinessException:
             raise

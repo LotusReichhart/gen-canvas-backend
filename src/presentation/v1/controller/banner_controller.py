@@ -6,7 +6,7 @@ from src.application_container import ApplicationContainer
 
 from src.core.common.i18n import i18n
 from src.core.common.constants import MsgKey
-from src.core.domain.dto.banner_dto import BannerResponse
+from src.core.domain.dto.banner_dto import BannerListResponse
 from src.core.domain.usecase.banner.get_list_banner_use_case import GetListBannerUseCase
 
 from ...dependency import get_lang
@@ -15,7 +15,7 @@ from ..schema.base import BaseResponse
 
 router = APIRouter(prefix="/banners", tags=["Banners"])
 
-@router.get("", response_model=BaseResponse[List[BannerResponse]])
+@router.get("", response_model=BaseResponse[BannerListResponse])
 @inject
 @limiter.limit("15/minute")
 async def get_all_banners(

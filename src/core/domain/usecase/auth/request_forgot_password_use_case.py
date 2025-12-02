@@ -22,7 +22,7 @@ class RequestForgotPasswordUseCase:
         self._cache_otp_service = cache_otp_service
         self._mail_service = mail_service
 
-    async def execute(self, email: str) -> Dict[str, str]:
+    async def execute(self, email: str) -> None:
 
         async with self._uow as uow:
             user = await uow.user_repository.get_user_by_email(email)
@@ -53,8 +53,6 @@ class RequestForgotPasswordUseCase:
             )
 
             await self._cache_otp_service.save_forgot_otp(email=email, otp=otp, user_id=user_id)
-            return {"email": email}
-
         except BusinessException:
             raise
 

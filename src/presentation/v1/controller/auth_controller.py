@@ -4,6 +4,7 @@ from dependency_injector.wiring import inject, Provide
 from src.application_container import ApplicationContainer
 from src.core.common.i18n import i18n
 from src.core.common.constants import MsgKey
+from src.core.domain.dto.auth_dto import TokenResponse, ResetTokenResponse
 from src.core.domain.usecase.auth.password_verification_use_case import PasswordVerificationUseCase
 from src.core.domain.usecase.auth.refresh_signin_use_case import RefreshSigninUseCase
 from src.core.domain.usecase.auth.request_forgot_password_use_case import RequestForgotPasswordUseCase
@@ -34,7 +35,7 @@ from ...limiter import limiter
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
-@router.post("/signin", response_model=BaseResponse)
+@router.post("/signin", response_model=BaseResponse[TokenResponse])
 @inject
 @limiter.limit("6/minute")
 async def signin(
@@ -65,11 +66,11 @@ async def request_signup(
     await use_case.execute(email=body_data.email, name=body_data.name, password=body_data.password)
     return BaseResponse(
         status=200,
-        message=i18n.translate("otp_sent", lang)
+        message=i18n.translate(MsgKey.OTP_SENT, lang)
     )
 
 
-@router.post("/signup/verify", response_model=BaseResponse)
+@router.post("/signup/verify", response_model=BaseResponse[TokenResponse])
 @inject
 @limiter.limit("6/minute")
 async def verify_signup(
@@ -83,11 +84,11 @@ async def verify_signup(
     return BaseResponse(
         status=200,
         message=i18n.translate(MsgKey.USER_CREATED, lang),
-        data=result  # {access_token, refresh_token}
+        data=result
     )
 
 
-@router.post("/refresh", response_model=BaseResponse)
+@router.post("/refresh", response_model=BaseResponse[TokenResponse])
 @inject
 @limiter.limit("6/minute")
 async def refresh_signin(
@@ -133,16 +134,15 @@ async def request_forgot_password(
             Provide[ApplicationContainer.use_case_package.request_forgot_password_use_case]),
         lang: str = Depends(get_lang)
 ):
-    result = await use_case.execute(email=body_data.email)
+    await use_case.execute(email=body_data.email)
 
     return BaseResponse(
         status=200,
-        message=i18n.translate(MsgKey.OTP_SENT, lang),
-        data=result
+        message=i18n.translate(MsgKey.OTP_SENT, lang)
     )
 
 
-@router.post("/google", response_model=BaseResponse)
+@router.post("/google", response_model=BaseResponse[TokenResponse])
 @inject
 @limiter.limit("6/minute")
 async def google_auth(
@@ -179,7 +179,7 @@ async def resend_otp(
     )
 
 
-@router.post("/password/verify", response_model=BaseResponse)
+@router.post("/password/verify", response_model=BaseResponse[ResetTokenResponse])
 @inject
 @limiter.limit("6/minute")
 async def verify_forgot_password(
@@ -194,7 +194,7 @@ async def verify_forgot_password(
     return BaseResponse(
         status=200,
         message=i18n.translate(MsgKey.VERIFY_SUCCESS, lang),
-        data=result  # Trả về reset_token
+        data=result
     )
 
 
