@@ -15,6 +15,7 @@ from src.core.model.user.enums.user_status import UserStatus
 from src.core.model.user.enums.user_tier import UserTier
 from src.core.model.user.user_credit import UserCredit
 
+from ...dto.auth_dto import TokenResponse
 from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
@@ -31,7 +32,7 @@ class SignInWithGoogleUseCase:
         self._cache_token_service = cache_token_service
         self._client_id = client_id
 
-    async def execute(self, user_id_token: str) -> Dict[str, str]:
+    async def execute(self, user_id_token: str) -> TokenResponse:
         try:
             idinfo = id_token.verify_oauth2_token(
                 user_id_token, requests.Request(), self._client_id
@@ -101,10 +102,10 @@ class SignInWithGoogleUseCase:
                 token=refresh_token
             )
 
-            return {
-                "access_token": access_token,
-                "refresh_token": refresh_token
-            }
+            return TokenResponse(
+                access_token=access_token,
+                refresh_token=refresh_token
+            )
 
         except BusinessException:
             raise

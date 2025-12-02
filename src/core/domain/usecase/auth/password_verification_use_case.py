@@ -5,6 +5,7 @@ from loguru import logger
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
 
+from ...dto.auth_dto import ResetTokenResponse
 from ...service.cache_otp_service import CacheOtpService
 from ...service.cache_token_service import CacheTokenService
 from ...service.token_service import TokenService
@@ -18,7 +19,7 @@ class PasswordVerificationUseCase:
         self._cache_otp_service = cache_otp_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, email: str, otp: str) -> Dict[str, str]:
+    async def execute(self, email: str, otp: str) -> ResetTokenResponse:
         try:
             otp_data = await self._cache_otp_service.verify_forgot_otp(email=email, otp=otp)
             if not otp_data:
@@ -37,7 +38,9 @@ class PasswordVerificationUseCase:
                 user_id=user_id
             )
 
-            return {"reset_token": reset_token}
+            return ResetTokenResponse(
+                reset_token=reset_token,
+            )
 
         except BusinessException:
             raise

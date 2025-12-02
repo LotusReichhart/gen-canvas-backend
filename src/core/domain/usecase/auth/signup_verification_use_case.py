@@ -12,6 +12,7 @@ from src.core.model.user.enums.user_tier import UserTier
 from src.core.model.user.user import User
 from src.core.model.user.user_credit import UserCredit
 
+from ...dto.auth_dto import TokenResponse
 from ...repository.unit_of_work import UnitOfWork
 from ...service.cache_otp_service import CacheOtpService
 from ...service.cache_token_service import CacheTokenService
@@ -29,7 +30,7 @@ class SignupVerificationUseCase:
         self._token_service = token_service
         self._cache_token_service = cache_token_service
 
-    async def execute(self, email: str, otp: str) -> Dict[str, str]:
+    async def execute(self, email: str, otp: str) -> TokenResponse:
         try:
             otp_data = await self._cache_otp_service.verify_signup_otp(email=email, otp=otp)
             if not otp_data:
@@ -79,10 +80,10 @@ class SignupVerificationUseCase:
                 token=refresh_token
             )
 
-            return {
-                "access_token": access_token,
-                "refresh_token": refresh_token
-            }
+            return TokenResponse(
+                access_token=access_token,
+                refresh_token=refresh_token
+            )
 
         except BusinessException:
             raise

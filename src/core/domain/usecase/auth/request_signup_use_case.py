@@ -25,7 +25,7 @@ class RequestSignupUseCase:
         self._mail_service = mail_service
         self._password_hasher_service = password_hasher_service
 
-    async def execute(self, email: str, name: str, password: str) -> Dict[str, str]:
+    async def execute(self, email: str, name: str, password: str) -> None:
         async with self._uow as uow:
             email_exists = await uow.user_repository.exists_by_email(email)
 
@@ -60,8 +60,6 @@ class RequestSignupUseCase:
                 name=name,
                 password=hashed_pw
             )
-
-            return {"email": email}
 
         except BusinessException:
             raise
