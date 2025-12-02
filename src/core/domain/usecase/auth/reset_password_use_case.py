@@ -45,7 +45,7 @@ class ResetPasswordUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"ResetPasswordUseCase error for token {e}")
+            logger.error(f"ResetPasswordUseCase error for token {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

@@ -52,7 +52,7 @@ class SignInWithGoogleUseCase:
                 status_code=401
             )
         except Exception as e:
-            logger.exception("Unexpected error during Google Verification")
+            logger.error("Unexpected error during Google Verification")
             raise BusinessException(message_key=MsgKey.SERVER_ERROR, status_code=500)
 
         try:
@@ -110,7 +110,7 @@ class SignInWithGoogleUseCase:
             raise
 
         except Exception as e:
-            logger.exception(
+            logger.error(
                 f"Error handling Google Auth for email: {user_email if 'user_email' in locals() else 'unknown'}")
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

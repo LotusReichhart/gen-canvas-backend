@@ -67,7 +67,7 @@ class RequestSignupUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"RequestSignupUseCase unexpected error for email {e}")
+            logger.error(f"RequestSignupUseCase unexpected error for email {e}")
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,
                 status_code=500

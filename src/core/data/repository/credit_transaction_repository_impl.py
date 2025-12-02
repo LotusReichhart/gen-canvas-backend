@@ -26,7 +26,7 @@ class CreditTransactionRepositoryImpl(BaseRepository[CreditTransactionEntity], C
 
             return CreditTransactionMapper.to_model(created_entity)
         except SQLAlchemyError as e:
-            logger.exception(f"Error creating credit transaction: {e}")
+            logger.error(f"Error creating credit transaction: {e}")
             raise
 
     async def list_transactions_by_user_id(
@@ -54,7 +54,7 @@ class CreditTransactionRepositoryImpl(BaseRepository[CreditTransactionEntity], C
             ]
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error listing transactions for user {user_id}: {e}")
+            logger.error(f"Error listing transactions for user {user_id}: {e}")
             raise
 
 

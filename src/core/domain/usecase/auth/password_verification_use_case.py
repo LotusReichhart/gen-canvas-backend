@@ -43,7 +43,7 @@ class PasswordVerificationUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"PasswordVerificationUseCase error for email {e}")
+            logger.error(f"PasswordVerificationUseCase error for email {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

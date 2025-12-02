@@ -84,7 +84,7 @@ class SigninWithEmailUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"Error during Signin for email: {e}")
+            logger.error(f"Error during Signin for email: {e}")
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,
                 status_code=500

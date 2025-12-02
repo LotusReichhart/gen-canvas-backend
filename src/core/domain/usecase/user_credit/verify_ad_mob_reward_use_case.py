@@ -67,10 +67,10 @@ class VerifyAdMobRewardUseCase:
             logger.info(f"Successfully rewarded user {user_id} from AdMob webhook.")
 
         except BusinessException as e:
-            logger.exception(f"VerifyAdMobRewardUseCase AppError: {e}")
+            logger.error(f"VerifyAdMobRewardUseCase AppError: {e}")
             raise
         except Exception as e:
-            logger.exception(f"VerifyAdMobRewardUseCase Exception: {e}")
+            logger.error(f"VerifyAdMobRewardUseCase Exception: {e}")
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,
                 status_code=500

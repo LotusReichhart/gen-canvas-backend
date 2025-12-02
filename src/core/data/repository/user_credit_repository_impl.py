@@ -26,7 +26,7 @@ class UserCreditRepositoryImpl(BaseRepository[UserCreditEntity], UserCreditRepos
 
             return UserCreditMapper.to_model(credit_entity)
         except SQLAlchemyError as e:
-            logger.exception(f"Error creating user credit: {e}")
+            logger.error(f"Error creating user credit: {e}")
             raise
 
     async def get_user_credit_by_user_id(self, user_id: int) -> Optional[UserCredit]:
@@ -40,7 +40,7 @@ class UserCreditRepositoryImpl(BaseRepository[UserCreditEntity], UserCreditRepos
 
             return UserCreditMapper.to_model(credit_entity)
         except SQLAlchemyError as e:
-            logger.exception(f"Error fetching credit for user_id {user_id}: {e}")
+            logger.error(f"Error fetching credit for user_id {user_id}: {e}")
             raise
 
     async def update_user_credit(self, user_credit: UserCredit) -> Optional[UserCredit]:
@@ -65,5 +65,5 @@ class UserCreditRepositoryImpl(BaseRepository[UserCreditEntity], UserCreditRepos
             return UserCreditMapper.to_model(credit_entity)
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error updating credit account: {e}")
+            logger.error(f"Error updating credit account: {e}")
             raise

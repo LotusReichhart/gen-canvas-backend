@@ -39,7 +39,7 @@ class UnitOfWorkImpl(UnitOfWork):
         try:
             await self._session.commit()
         except Exception as e:
-            logger.exception("Commit failed, rolling back.")
+            logger.error("Commit failed, rolling back.")
             await self.rollback()
             raise e
 

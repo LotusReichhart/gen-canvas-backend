@@ -30,11 +30,18 @@ async def business_exception_handler(request: Request, exc: BusinessException):
             trans_errors[field] = i18n.translate(key, lang)
 
         msg = i18n.translate(exc.message_key, lang)
-        return create_response(exc.status_code, msg, content_data={"error": trans_errors})
-
+        return create_response(
+            status_code=exc.status_code,
+            message=msg,
+            content_data={"error": trans_errors}
+        )
     else:
         msg = i18n.translate(exc.message_key, lang)
-        return create_response(exc.status_code, msg, content_data=None)
+        return create_response(
+            status_code=exc.status_code,
+            message=msg,
+            content_data=None
+        )
 
 
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -46,9 +53,15 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         msg_content = err["msg"]
 
         if "Value error," in msg_content:
-            error_key = msg_content.split("Value error, ")[1].strip()
-            translated_msg = i18n.translate(error_key, lang)
-            errors[field] = translated_msg
+            try:
+                error_key = msg_content.split("Value error, ")[1].strip()
+                translated_msg = i18n.translate(error_key, lang)
+
+                if translated_msg == error_key:
+                    pass
+                errors[field] = translated_msg
+            except IndexError:
+                errors[field] = msg_content
         else:
             if err["type"] == "missing":
                 errors[field] = i18n.translate(MsgKey.VALIDATION_ERROR, lang)
@@ -57,9 +70,9 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
     general_msg = i18n.translate(MsgKey.VALIDATION_ERROR, lang)
     return create_response(
-        status.HTTP_422_UNPROCESSABLE_ENTITY,
-        general_msg,
-        {"error": errors}
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        message= general_msg,
+        content_data={"error": errors}
     )
 
 
@@ -67,7 +80,7 @@ async def global_exception_handler(request: Request, exc: Exception):
     lang = get_lang(request.headers.get("accept-language", "vi"))
     msg = i18n.translate(MsgKey.SERVER_ERROR, lang)
 
-    logger.exception(f"Unhandled Exception: {exc}")
+    logger.error(f"Unhandled Exception: {exc}")
 
     return create_response(
         status_code=500,

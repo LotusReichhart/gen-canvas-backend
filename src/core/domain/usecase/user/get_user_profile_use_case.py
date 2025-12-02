@@ -31,7 +31,7 @@ class GetUserProfileUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"GetUserProfileUseCase: {e}")
+            logger.error(f"GetUserProfileUseCase: {e}")
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,
                 status_code=500
