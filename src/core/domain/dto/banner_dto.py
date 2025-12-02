@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 
 
@@ -11,3 +11,6 @@ class BannerResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class BannerListResponse(BaseModel):
+    banners: List[BannerResponse]

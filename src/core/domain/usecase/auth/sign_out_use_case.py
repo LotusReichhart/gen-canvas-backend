@@ -44,7 +44,7 @@ class SignOutUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"SignOutUseCase error for user {e}")
+            logger.error(f"SignOutUseCase error for user {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

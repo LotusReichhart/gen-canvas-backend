@@ -59,7 +59,7 @@ class RequestForgotPasswordUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"RequestForgotPasswordUseCase error for email {e}")
+            logger.error(f"RequestForgotPasswordUseCase error for email {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

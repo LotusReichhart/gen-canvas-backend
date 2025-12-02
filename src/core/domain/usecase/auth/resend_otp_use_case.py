@@ -47,7 +47,7 @@ class ResendOtpUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"ResendOTPUseCase error for email {e}")
+            logger.error(f"ResendOTPUseCase error for email {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

@@ -15,7 +15,7 @@ from ..schema.base import BaseResponse
 
 router = APIRouter(prefix="/banners", tags=["Banners"])
 
-@router.get("/", response_model=BaseResponse[List[BannerResponse]])
+@router.get("", response_model=BaseResponse[List[BannerResponse]])
 @inject
 @limiter.limit("15/minute")
 async def get_all_banners(

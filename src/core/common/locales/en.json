@@ -9,7 +9,7 @@
   "otp_sent": "A verification code has been sent to your email.",
   "verify_success": "Verification successful.",
   "password_changed": "Your password has been changed successfully.",
-  "server_error": "System error",
+  "server_error": "System error, please try again.",
   "validation_error": "Invalid input data",
   "spam_detected": "You are performing actions too quickly. Please try again later.",
   "auth_required": "Please log in to continue.",

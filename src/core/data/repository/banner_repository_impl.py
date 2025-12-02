@@ -33,5 +33,5 @@ class BannerRepositoryImpl(BaseRepository[BannerEntity], BannerRepository):
                 for model in banner_models
             ]
         except SQLAlchemyError as e:
-            logger.exception(f"Error fetching active banners: {e}")
+            logger.error(f"Error fetching active banners: {e}")
             raise

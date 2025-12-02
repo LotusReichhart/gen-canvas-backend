@@ -6,6 +6,7 @@ from loguru import logger
 
 from src.config.settings import settings
 from src.core.common.constants import MsgKey
+from src.core.common.i18n import i18n
 
 from ...handler import create_response
 
@@ -29,6 +30,10 @@ class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         lang = request.headers.get("accept-language", "vi").split(",")[0].split("-")[0]
 
+        def error_res(status_code: int, key: str):
+            msg = i18n.translate(key, lang)
+            return create_response(status_code=status_code, message=msg, content_data=None)
+
         try:
             if any(request.url.path.startswith(path) for path in self.public_paths):
                 return await call_next(request)
@@ -38,14 +43,14 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
             auth_header = request.headers.get("Authorization")
             if not auth_header:
-                return create_response(status.HTTP_401_UNAUTHORIZED, MsgKey.AUTH_REQUIRED, lang)
+                return error_res(status.HTTP_401_UNAUTHORIZED, MsgKey.AUTH_REQUIRED)
 
             try:
                 scheme, token = auth_header.split()
                 if scheme.lower() != "bearer":
-                    return create_response(status.HTTP_401_UNAUTHORIZED, MsgKey.INVALID_TOKEN, lang)
+                    return error_res(status.HTTP_401_UNAUTHORIZED, MsgKey.INVALID_TOKEN)
             except ValueError:
-                return create_response(status.HTTP_401_UNAUTHORIZED, MsgKey.INVALID_TOKEN, lang)
+                return error_res(status.HTTP_401_UNAUTHORIZED, MsgKey.INVALID_TOKEN)
 
             try:
                 payload = jwt.decode(
@@ -54,10 +59,10 @@ class AuthMiddleware(BaseHTTPMiddleware):
                     algorithms=["HS256"]
                 )
             except jwt.ExpiredSignatureError:
-                return create_response(status.HTTP_401_UNAUTHORIZED, MsgKey.AUTH_REQUIRED, lang)
+                return error_res(status.HTTP_401_UNAUTHORIZED, MsgKey.AUTH_REQUIRED)
             except jwt.InvalidTokenError as e:
                 logger.warning(f"Invalid Token attempt: {e}")
-                return create_response(status.HTTP_401_UNAUTHORIZED, MsgKey.INVALID_TOKEN, lang)
+                return error_res(status.HTTP_401_UNAUTHORIZED, MsgKey.INVALID_TOKEN)
 
             request.state.user = {
                 "id": payload.get("id"),
@@ -69,5 +74,5 @@ class AuthMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         except Exception as e:
-            logger.exception(f"Unhandled error in AuthMiddleware: {e}")
-            return create_response(status.HTTP_500_INTERNAL_SERVER_ERROR, MsgKey.SERVER_ERROR, lang)
+            logger.error(f"Unhandled error in AuthMiddleware: {e}")
+            return error_res(status.HTTP_500_INTERNAL_SERVER_ERROR, MsgKey.SERVER_ERROR)

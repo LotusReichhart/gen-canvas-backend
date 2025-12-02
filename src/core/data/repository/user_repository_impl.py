@@ -27,7 +27,7 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             return UserMapper.to_model(user_entity)
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error fetching user by id {e}")
+            logger.error(f"Error fetching user by id {e}")
             raise
 
     async def get_user_by_email(self, email: str) -> Optional[User]:
@@ -42,7 +42,7 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             return UserMapper.to_model(user_entity)
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error fetching user by email {e}")
+            logger.error(f"Error fetching user by email {e}")
             raise
 
     async def exists_by_email(self, email: str) -> bool:
@@ -56,7 +56,7 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             return exists
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error checking email existence {e}")
+            logger.error(f"Error checking email existence {e}")
             raise
 
     async def create_user(self, user: User) -> User:
@@ -69,7 +69,7 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             return UserMapper.to_model(created_entity)
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error creating user {e}")
+            logger.error(f"Error creating user {e}")
             raise
 
     async def update_user(self, user: User) -> User | None:
@@ -94,5 +94,5 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             return UserMapper.to_model(user_entity)
 
         except SQLAlchemyError as e:
-            logger.exception(f"Error updating user ID {e}")
+            logger.error(f"Error updating user ID {e}")
             raise

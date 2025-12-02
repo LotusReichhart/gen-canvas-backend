@@ -9,7 +9,7 @@
   "otp_sent": "Mã xác thực đã được gửi tới email của bạn.",
   "verify_success": "Xác thực thành công.",
   "password_changed": "Mật khẩu của bạn đã được thay đổi thành công.",
-  "server_error": "Lỗi hệ thống",
+  "server_error": "Lỗi hệ thống, vui lòng thử lại sau.",
   "validation_error": "Dữ liệu đầu vào không hợp lệ",
   "spam_detected": "Bạn thao tác quá nhanh, vui lòng thử lại sau.",
   "auth_required": "Vui lòng đăng nhập để thực hiện.",

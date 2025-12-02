@@ -83,7 +83,7 @@ class RefreshSigninUseCase:
             raise
 
         except Exception as e:
-            logger.exception(f"RefreshSigninUseCase error")
+            logger.error(f"RefreshSigninUseCase error")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

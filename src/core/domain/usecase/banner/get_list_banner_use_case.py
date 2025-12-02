@@ -4,7 +4,7 @@ from typing import List
 from src.core.common.constants import MsgKey
 from src.core.common.exceptions import BusinessException
 
-from ...dto.banner_dto import BannerResponse
+from ...dto.banner_dto import BannerResponse, BannerListResponse
 from ...repository.unit_of_work import UnitOfWork
 
 
@@ -13,17 +13,19 @@ class GetListBannerUseCase:
                  unit_of_work: UnitOfWork):
         self._uow = unit_of_work
 
-    async def execute(self) -> List[BannerResponse]:
+    async def execute(self) -> BannerListResponse:
         try:
             async with self._uow as uow:
                 banners = await uow.banner_repository.list_active_banners()
 
-            return [BannerResponse.model_validate(b) for b in banners]
+            banner_list = [BannerResponse.model_validate(b) for b in banners]
+
+            return BannerListResponse(banners=banner_list)
         except BusinessException:
             raise
 
         except Exception as e:
-            logger.exception(f"GetListBannerUseCase error {e}")
+            logger.error(f"GetListBannerUseCase error {e}")
 
             raise BusinessException(
                 message_key=MsgKey.SERVER_ERROR,

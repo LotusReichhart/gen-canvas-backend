@@ -15,21 +15,25 @@ class AppLogger:
             "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
         )
 
-        if settings.ENV == "dev":
+        sink = sys.stdout
+
+        if settings.ENV == "development":
             logger.add(
-                sys.stdout,
+                sink,
                 level="DEBUG",
                 format=log_format,
                 colorize=True,
                 backtrace=True,
-                diagnose=True
+                diagnose=True,
+                enqueue=True
             )
         else:
             logger.add(
                 sys.stdout,
                 level="ERROR",
                 format=log_format,
-                colorize=False
+                colorize=False,
+                enqueue=True
             )
 
             logger.add(
@@ -39,6 +43,8 @@ class AppLogger:
                 level="INFO",
                 encoding="utf-8"
             )
+
+        logger.info(f"Logger setup complete. ENV: {settings.ENV}")
 
 def setup_logging():
     AppLogger.setup()

@@ -10,8 +10,12 @@ from src.core.data.database.model.banner_entity import BannerEntity
 async def lifespan(app: FastAPI):
     logger.info("Application startup...")
 
-    db_wrapper = app.container.database_package.db()
-    redis_client = app.container.external_service_package.redis_client()
+    try:
+        db_wrapper = app.container.database_package.db()
+        redis_client = app.container.external_service_package.redis_client()
+    except AttributeError as e:
+        logger.error(f"❌ Container Wiring Error: {e}. Kiểm tra lại tên package trong containers.py")
+        raise e
 
     try:
         logger.info("Initializing Database (Extensions & Tables)...")
