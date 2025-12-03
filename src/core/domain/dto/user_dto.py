@@ -24,7 +24,7 @@ class UserResponse(BaseModel):
 class UserCreditResponse(BaseModel):
     user_id: int
     balance: int
-    last_refill_processed_date: Optional[date] = None
+    last_refill_date: Optional[date] = None
 
     class Config:
         from_attributes = True

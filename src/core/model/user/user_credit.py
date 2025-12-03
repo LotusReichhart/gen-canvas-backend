@@ -11,4 +11,6 @@ class UserCredit(BaseModel):
     id: Optional[int] = None
     user_id: int
     balance: int = field(default=5)
-    last_refill_processed_date: Optional[date] = None
+
+    last_refill_date: Optional[date] = None
+    last_notification_date: Optional[date] = None
