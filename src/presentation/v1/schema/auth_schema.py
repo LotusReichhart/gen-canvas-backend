@@ -1,17 +1,20 @@
 from typing import Annotated
 
-from pydantic import BaseModel, Field, model_validator, AfterValidator
+from pydantic import BaseModel, Field, AfterValidator, field_validator, ValidationInfo
 
+from src.core.common.constants import MsgKey
 from src.core.common.util.validators import (
     validate_name_logic,
     validate_email_logic,
     validate_password_logic,
-    validate_otp_logic
+    validate_otp_logic,
+    validate_confirm_password_logic
 )
 
 NameField = Annotated[str, AfterValidator(validate_name_logic)]
 EmailField = Annotated[str, AfterValidator(validate_email_logic)]
 PasswordField = Annotated[str, AfterValidator(validate_password_logic)]
+ConfirmPasswordField = Annotated[str, AfterValidator(validate_confirm_password_logic)]
 OtpField = Annotated[str, AfterValidator(validate_otp_logic)]
 
 
@@ -54,13 +57,15 @@ class VerifyForgotPasswordRequest(BaseModel):
 class ResetPasswordRequest(BaseModel):
     reset_token: str
     new_password: PasswordField
-    confirm_password: str
+    confirm_password: ConfirmPasswordField
 
-    @model_validator(mode='after')
-    def check_passwords_match(self) -> 'ResetPasswordRequest':
-        if self.new_password != self.confirm_password:
-            raise ValueError('Mật khẩu xác nhận không khớp')
-        return self
+    @field_validator('confirm_password')
+    @classmethod
+    def check_passwords_match(cls, v: str, info: ValidationInfo) -> str:
+        if 'new_password' in info.data:
+            if v != info.data['new_password']:
+                raise ValueError(MsgKey.VAL_PASSWORD_MISMATCH.value)
+        return v
 
 
 # --- RESEND OTP ---

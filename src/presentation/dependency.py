@@ -1,6 +1,6 @@
 from fastapi import Request, Header
 
-def get_lang(accept_language: str = Header(default="vi", convert_underscores=False)) -> str:
+def get_lang(accept_language: str = Header(default="en", convert_underscores=False)) -> str:
     return accept_language.split(",")[0].split("-")[0]
 
 def get_current_user_id(request: Request) -> int:

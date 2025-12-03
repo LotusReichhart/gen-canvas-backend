@@ -63,7 +63,7 @@ async def request_signup(
             Provide[ApplicationContainer.use_case_package.request_signup_use_case]),
         lang: str = Depends(get_lang)
 ):
-    await use_case.execute(email=body_data.email, name=body_data.name, password=body_data.password)
+    await use_case.execute(email=body_data.email, name=body_data.name, password=body_data.password, lang=lang)
     return BaseResponse(
         status=200,
         message=i18n.translate(MsgKey.OTP_SENT, lang)
@@ -134,7 +134,7 @@ async def request_forgot_password(
             Provide[ApplicationContainer.use_case_package.request_forgot_password_use_case]),
         lang: str = Depends(get_lang)
 ):
-    await use_case.execute(email=body_data.email)
+    await use_case.execute(email=body_data.email, lang=lang)
 
     return BaseResponse(
         status=200,
@@ -171,7 +171,7 @@ async def resend_otp(
         use_case: ResendOtpUseCase = Depends(Provide[ApplicationContainer.use_case_package.resend_otp_use_case]),
         lang: str = Depends(get_lang)
 ):
-    await use_case.execute(email=body_data.email)
+    await use_case.execute(email=body_data.email, lang=lang)
 
     return BaseResponse(
         status=200,

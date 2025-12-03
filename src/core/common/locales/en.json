@@ -37,5 +37,7 @@
   "val_password_no_special": "Password must contain at least 1 special character",
   "val_otp_empty": "Please enter OTP",
   "val_otp_invalid": "OTP must be 6 digits",
-  "val_unsafe_input": "Input contains unsafe characters"
+  "val_unsafe_input": "Input contains unsafe characters",
+  "val_confirm_password_empty": "Please confirm your password",
+  "val_password_mismatch": "Confirmation password does not match"
 }

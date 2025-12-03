@@ -55,6 +55,17 @@ def validate_password_logic(password: str) -> str:
     return password
 
 
+def validate_confirm_password_logic(password: str) -> str:
+    password = password.strip()
+    if not password:
+        raise ValueError(MsgKey.VAL_CONFIRM_PASSWORD_EMPTY.value)
+
+    if not is_safe_input(password):
+        raise ValueError(MsgKey.VAL_UNSAFE_INPUT.value)
+
+    return password
+
+
 def validate_otp_logic(otp: str) -> str:
     otp = otp.strip()
     if not otp:

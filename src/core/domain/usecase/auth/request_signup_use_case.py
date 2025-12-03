@@ -25,7 +25,7 @@ class RequestSignupUseCase:
         self._mail_service = mail_service
         self._password_hasher_service = password_hasher_service
 
-    async def execute(self, email: str, name: str, password: str) -> None:
+    async def execute(self, email: str, name: str, password: str, lang: str = "en") -> None:
         async with self._uow as uow:
             email_exists = await uow.user_repository.exists_by_email(email)
 
@@ -46,7 +46,7 @@ class RequestSignupUseCase:
                 )
 
             otp = self._generate_otp_service.generate_otp()
-            template = self._mail_service.build_otp_template(otp)
+            template = self._mail_service.build_otp_template(otp=otp, lang=lang)
             await self._mail_service.send_mail(
                 to=email,
                 subject=template["subject"],
