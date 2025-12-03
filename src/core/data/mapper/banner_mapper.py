@@ -1,4 +1,4 @@
-from src.core.model.user.banner import Banner
+from src.core.model.banner import Banner
 
 from ..database.model.banner_entity import BannerEntity
 

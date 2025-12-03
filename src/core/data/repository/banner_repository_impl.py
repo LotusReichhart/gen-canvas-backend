@@ -5,7 +5,7 @@ from sqlalchemy import asc, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.core.model.user.banner import Banner
+from src.core.model.banner import Banner
 from src.core.domain.repository.banner_repository import BannerRepository
 
 from ..database.base_repository import BaseRepository
