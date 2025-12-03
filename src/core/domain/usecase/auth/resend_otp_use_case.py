@@ -17,7 +17,7 @@ class ResendOtpUseCase:
         self._cache_otp_service = cache_otp_service
         self._mail_service = mail_service
 
-    async def execute(self, email: str) -> None:
+    async def execute(self, email: str, lang: str = "en") -> None:
         allowed = await self._cache_otp_service.check_and_increment_limit(email)
         if not allowed:
             raise BusinessException(
@@ -34,7 +34,7 @@ class ResendOtpUseCase:
                 status_code=500
             )
 
-        template = self._mail_service.build_otp_template(otp)
+        template = self._mail_service.build_otp_template(otp=otp, lang=lang)
 
         try:
             await self._mail_service.send_mail(

@@ -8,5 +8,5 @@ class MailService(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def build_otp_template(self, otp: str) -> Dict[str, str]:
+    def build_otp_template(self, otp: str, lang: str = "en") -> Dict[str, str]:
         raise NotImplementedError

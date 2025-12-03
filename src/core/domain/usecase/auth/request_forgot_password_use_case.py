@@ -22,7 +22,7 @@ class RequestForgotPasswordUseCase:
         self._cache_otp_service = cache_otp_service
         self._mail_service = mail_service
 
-    async def execute(self, email: str) -> None:
+    async def execute(self, email: str, lang: str = "en") -> None:
 
         async with self._uow as uow:
             user = await uow.user_repository.get_user_by_email(email)
@@ -45,7 +45,7 @@ class RequestForgotPasswordUseCase:
                 )
 
             otp = self._generate_otp_service.generate_otp()
-            template = self._mail_service.build_otp_template(otp)
+            template = self._mail_service.build_otp_template(otp=otp, lang=lang)
             await self._mail_service.send_mail(
                 to=email,
                 subject=template["subject"],

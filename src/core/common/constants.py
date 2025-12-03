@@ -45,6 +45,8 @@ class MsgKey(str, Enum):
     VAL_OTP_EMPTY = "val_otp_empty"
     VAL_OTP_INVALID = "val_otp_invalid"
     VAL_UNSAFE_INPUT = "val_unsafe_input"
+    VAL_CONFIRM_PASSWORD_EMPTY = "val_confirm_password_empty"
+    VAL_PASSWORD_MISMATCH = "val_password_mismatch"
 
     # Errors (Validation generic)
     VALIDATION_ERROR = "validation_error"

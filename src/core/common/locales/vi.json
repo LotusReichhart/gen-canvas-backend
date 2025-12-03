@@ -37,5 +37,7 @@
   "val_password_no_special": "Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt",
   "val_otp_empty": "Vui lòng nhập mã OTP",
   "val_otp_invalid": "Mã OTP phải gồm 6 chữ số",
-  "val_unsafe_input": "Dữ liệu chứa ký tự không an toàn"
+  "val_unsafe_input": "Dữ liệu chứa ký tự không an toàn",
+  "val_confirm_password_empty": "Vui lòng xác nhận lại mật khẩu",
+  "val_password_mismatch": "Mật khẩu xác nhận không khớp"
 }
