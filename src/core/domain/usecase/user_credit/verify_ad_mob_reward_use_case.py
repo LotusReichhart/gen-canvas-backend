@@ -45,7 +45,7 @@ class VerifyAdMobRewardUseCase:
             user_id = int(user_id_str)
 
             async with self.uow as uow:
-                user_credit = await uow.credit_repository.get_user_credit_by_user_id(user_id)
+                user_credit = await uow.user_credit_repository.get_user_credit_by_user_id(user_id)
                 if not user_credit:
                     raise BusinessException(
                         message_key=MsgKey.USER_CREDIT_NOT_FOUND,
@@ -53,7 +53,7 @@ class VerifyAdMobRewardUseCase:
                     )
 
                 user_credit.balance += reward_amount
-                await uow.credit_repository.update_user_credit(user_credit)
+                await uow.user_credit_repository.update_user_credit(user_credit)
 
                 transaction = CreditTransaction(
                     credit_id=user_credit.id,

@@ -76,7 +76,7 @@ class SignInWithGoogleUseCase:
                     user = await uow.user_repository.create_user(new_user)
 
                     new_user_credit = UserCredit(user_id=user.id, balance=5)
-                    await uow.credit_repository.create_user_credit(new_user_credit)
+                    await uow.user_credit_repository.create_user_credit(new_user_credit)
 
                     logger.info(f"New Google user created: {user_email}")
 
