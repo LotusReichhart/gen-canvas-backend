@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from loguru import logger
+from sqlalchemy.orm import selectinload
 
 from src.core.model.user.user import User
 
@@ -19,7 +20,14 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
 
     async def get_user_by_id(self, user_id: int) -> Optional[User]:
         try:
-            user_entity = await self.get_by_id(user_id)
+            query = (
+                select(UserEntity)
+                .options(selectinload(UserEntity.user_credit))
+                .where(UserEntity.id == user_id)
+            )
+
+            result = await self.session.execute(query)
+            user_entity = result.scalar_one_or_none()
 
             if not user_entity:
                 return None

@@ -21,9 +21,11 @@ class GetUserProfileUseCase:
                     raise BusinessException(message_key=MsgKey.USER_NOT_FOUND, status_code=404)
 
                 user_response = UserResponse.model_validate(user)
-                credit_response = None
+
                 if user.user_credit:
                     credit_response = UserCreditResponse.model_validate(user.user_credit)
+                else:
+                    credit_response = UserCreditResponse(user_id=user.id, balance=0, last_refill_processed_date=None)
 
                 return UserProfileDTO(user=user_response, credit=credit_response)
 

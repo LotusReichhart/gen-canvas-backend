@@ -10,7 +10,7 @@ from src.core.model.user.enums.user_tier import UserTier
 
 class UserResponse(BaseModel):
     id: int
-    username: str
+    name: str
     email: str
     avatar: Optional[str] = None
     status: UserStatus = UserStatus.ACTIVE
@@ -22,6 +22,7 @@ class UserResponse(BaseModel):
 
 
 class UserCreditResponse(BaseModel):
+    user_id: int
     balance: int
     last_refill_processed_date: Optional[date] = None
 
