@@ -1,7 +1,7 @@
 from typing import Optional
 
 from loguru import logger
-from select import select
+from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
