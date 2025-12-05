@@ -12,6 +12,7 @@ from ..auth.signin_with_google_use_case import SignInWithGoogleUseCase
 from ..auth.signup_verification_use_case import SignupVerificationUseCase
 from ..banner.get_list_banner_use_case import GetListBannerUseCase
 from ..user.get_user_profile_use_case import GetUserProfileUseCase
+from ..user.update_user_profile_use_case import UpdateUserProfileUseCase
 from ..user_credit.ensure_credit_balance_use_case import EnsureCreditBalanceUseCase
 from ..user_credit.verify_ad_mob_reward_use_case import VerifyAdMobRewardUseCase
 
@@ -114,6 +115,13 @@ class UseCaseContainer(containers.DeclarativeContainer):
     get_user_profile_use_case: GetUserProfileUseCase = providers.Factory(
         GetUserProfileUseCase,
         unit_of_work=repository_container.unit_of_work,
+        ensure_balance_use_case=ensure_credit_balance_use_case
+    )
+
+    update_user_profile_use_case = providers.Factory(
+        UpdateUserProfileUseCase,
+        unit_of_work=repository_container.unit_of_work,
+        storage_service=service_container.storage_service,
         ensure_balance_use_case=ensure_credit_balance_use_case
     )
 

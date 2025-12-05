@@ -58,11 +58,14 @@ class StorageServiceImpl(StorageService):
                 Bucket=self._bucket_name,
                 Key=file_key,
                 Body=file_content,
-                ContentType=file.content_type or "application/octet-stream",
-                ACL='public-read'
+                ContentType=file.content_type or "application/octet-stream"
             )
 
-            return f"{self._base_url}/{file_key}"
+            image_url = f"{self._base_url}/{file_key}"
+
+            logger.info(f"S3 Upload Success: {image_url}")
+
+            return image_url
         except Exception as e:
             logger.error(f"S3 Upload Error: {e}")
             raise BusinessException(MsgKey.UPLOAD_FAILED, 500)
