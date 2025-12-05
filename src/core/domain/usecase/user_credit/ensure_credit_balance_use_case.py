@@ -35,9 +35,14 @@ class EnsureCreditBalanceUseCase:
         user.user_credit.balance = result["new_balance"]
         user.user_credit.last_refill_date = result["refill_date"]
 
-        repo = self._uow.user_credit_repository if uow_session else self._uow.user_credit_repository
+        if uow_session:
+            user_credit_repo = uow_session.user_credit_repository
+            transaction_repo = uow_session.credit_transaction_repository
+        else:
+            logger.error("EnsureCreditBalanceUseCase called without active session!")
+            return user.user_credit
 
-        await repo.update_user_credit(user.user_credit)
+        await user_credit_repo.update_user_credit(user.user_credit)
 
         refill_amount = result["refill_amount"]
         if refill_amount > 0:
@@ -49,7 +54,7 @@ class EnsureCreditBalanceUseCase:
                 balance_after=result["new_balance"],
                 created_at=datetime.now(timezone.utc)
             )
-            await self._uow.credit_transaction_repository.create_transaction(transaction)
+            await transaction_repo.create_transaction(transaction)
             logger.info(f"Lazy Refill: User {user.id} +{refill_amount} credits")
 
         return user.user_credit

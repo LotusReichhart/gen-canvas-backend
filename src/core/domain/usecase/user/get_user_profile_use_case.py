@@ -34,7 +34,10 @@ class GetUserProfileUseCase:
                 else:
                     credit_response = UserCreditResponse(user_id=user.id, balance=0, last_refill_date=None)
 
-                return UserProfileDTO(user=user_response, credit=credit_response)
+                return UserProfileDTO(
+                    user=user_response,
+                    credit=credit_response
+                )
 
         except BusinessException:
             raise
