@@ -86,7 +86,13 @@ class UserRepositoryImpl(BaseRepository[UserEntity], UserRepository):
             return None
 
         try:
-            user_entity = await self.get_by_id(user.id)
+            query = (
+                select(UserEntity)
+                .options(selectinload(UserEntity.user_credit))
+                .where(UserEntity.id == user.id)
+            )
+            result = await self.session.execute(query)
+            user_entity = result.scalar_one_or_none()
 
             if not user_entity:
                 logger.warning(f"User update failed: User ID {user.id} not found")
