@@ -10,7 +10,8 @@ class UserCreditMapper:
             id=user_credit_entity.id,
             user_id=user_credit_entity.user_id,
             balance=user_credit_entity.balance,
-            last_refill_processed_date=user_credit_entity.last_refill_processed_date
+            last_refill_date=user_credit_entity.last_refill_date,
+            last_notification_date=user_credit_entity.last_notification_date,
         )
 
     @staticmethod
@@ -18,10 +19,12 @@ class UserCreditMapper:
         return UserCreditEntity(
             user_id=user_credit.user_id,
             balance=user_credit.balance,
-            last_refill_processed_date=user_credit.last_refill_processed_date
+            last_refill_date=user_credit.last_refill_date,
+            last_notification_date=user_credit.last_notification_date,
         )
 
     @staticmethod
     def to_update_entity(entity: UserCreditEntity, user_credit: UserCredit) -> None:
         entity.balance = user_credit.balance
-        entity.last_refill_processed_date = user_credit.last_refill_processed_date
+        entity.last_refill_date = user_credit.last_refill_date
+        entity.last_notification_date = user_credit.last_notification_date

@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
 
 from src.core.model.user.user_credit import UserCredit
 
@@ -13,16 +12,15 @@ class UserCreditRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_user_credit_by_user_id(self, user_id: int) -> Optional[UserCredit]:
+    async def get_user_credit_by_user_id(self, user_id: int) -> UserCredit:
         """
         Lấy tài khoản credit (và số dư) bằng user_id.
         """
         raise NotImplementedError
 
     @abstractmethod
-    async def update_user_credit(self, user_credit: UserCredit) ->Optional[UserCredit]:
+    async def update_user_credit(self, user_credit: UserCredit) -> UserCredit:
         """
         Cập nhật tài khoản credit.
         """
         raise NotImplementedError
-

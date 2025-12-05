@@ -48,6 +48,9 @@ class MsgKey(str, Enum):
     VAL_CONFIRM_PASSWORD_EMPTY = "val_confirm_password_empty"
     VAL_PASSWORD_MISMATCH = "val_password_mismatch"
 
+    UPDATE_SUCCESS = "update_success"
+    AVATAR_FILE_ERROR = "avatar_file_error"
+
     # Errors (Validation generic)
     VALIDATION_ERROR = "validation_error"
     SERVER_ERROR = "server_error"

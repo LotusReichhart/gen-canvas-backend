@@ -7,6 +7,7 @@ from src.core.domain.service.mail_service import MailService
 from src.core.domain.service.password_hasher_service import PasswordHasherService
 from src.core.domain.service.storage_service import StorageService
 from src.core.domain.service.token_service import TokenService
+from src.core.domain.service.user_credit_calculator_service import UserCreditCalculatorService
 
 from ..ad_mob_verification_service_impl import AdMobVerificationServiceImpl
 from ..cache_otp_service_impl import CacheOtpServiceImpl
@@ -16,6 +17,7 @@ from ..mail_service_impl import MailServiceImpl
 from ..password_hasher_service_impl import PasswordHasherServiceImpl
 from ..storage_service_impl import StorageServiceImpl
 from ..token_service_impl import TokenServiceImpl
+from ..user_credit_calculator_service_impl import UserCreditCalculatorServiceImpl
 
 
 class ServiceContainer(containers.DeclarativeContainer):
@@ -61,4 +63,8 @@ class ServiceContainer(containers.DeclarativeContainer):
         AdMobVerificationServiceImpl,
         cache=external_service_container.in_memory_cache,
         public_key_url=config.ADMOB_PUBLIC_KEY_URL
+    )
+
+    user_credit_calculator_service: UserCreditCalculatorService = providers.Factory(
+        UserCreditCalculatorServiceImpl
     )

@@ -29,31 +29,28 @@ class UserCreditRepositoryImpl(BaseRepository[UserCreditEntity], UserCreditRepos
             logger.error(f"Error creating user credit: {e}")
             raise
 
-    async def get_user_credit_by_user_id(self, user_id: int) -> Optional[UserCredit]:
+    async def get_user_credit_by_user_id(self, user_id: int) -> UserCredit:
         try:
             query = select(UserCreditEntity).where(UserCreditEntity.user_id == user_id)
             result = await self.session.execute(query)
             credit_entity = result.scalar_one_or_none()
-
-            if not credit_entity:
-                return None
 
             return UserCreditMapper.to_model(credit_entity)
         except SQLAlchemyError as e:
             logger.error(f"Error fetching credit for user_id {user_id}: {e}")
             raise
 
-    async def update_user_credit(self, user_credit: UserCredit) -> Optional[UserCredit]:
+    async def update_user_credit(self, user_credit: UserCredit) -> UserCredit:
         if user_credit.id is None:
             logger.warning("Attempted to update credit account without ID")
-            return None
+            raise
 
         try:
             credit_entity = await self.get_by_id(user_credit.id)
 
             if not credit_entity:
                 logger.warning(f"Credit update failed: Credit ID {credit_entity.id} not found")
-                return None
+                raise
 
             UserCreditMapper.to_update_entity(entity=credit_entity, user_credit=user_credit)
 
