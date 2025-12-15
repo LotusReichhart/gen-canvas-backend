@@ -1,0 +1,43 @@
+name: Retrospective
+description: Document past implementation decisions
+labels: ["retrospective"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What was implemented?
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What difficulties were encountered?
+    validations:
+      required: false
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution
+      description: Final decision or implementation
+    validations:
+      required: false
+
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Trade-offs
+      description: Compromises made
+    validations:
+      required: false
+
+  - type: textarea
+    id: commits
+    attributes:
+      label: Related Commits
+      description: Related commit links
+    validations:
+      required: false

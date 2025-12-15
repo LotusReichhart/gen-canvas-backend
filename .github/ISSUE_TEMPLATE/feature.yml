@@ -1,0 +1,57 @@
+name: Feature
+description: Propose or document a feature
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Context
+        Mô tả bối cảnh và mục tiêu của feature này.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Background of the feature
+    validations:
+      required: false
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem does this feature solve?
+    validations:
+      required: false
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution
+      description: Chosen implementation approach
+    validations:
+      required: false
+
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Trade-offs
+      description: Limitations or trade-offs
+    validations:
+      required: false
+
+  - type: textarea
+    id: commits
+    attributes:
+      label: Related Commits
+      description: Links to related commits
+    validations:
+      required: false
+
+  - type: textarea
+    id: done
+    attributes:
+      label: Done Criteria
+      description: Conditions to consider this feature done
+    validations:
+      required: false

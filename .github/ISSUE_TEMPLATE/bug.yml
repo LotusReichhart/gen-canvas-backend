@@ -1,0 +1,43 @@
+name: Bug
+description: Report or document a bug
+labels: ["bug"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: When and where does this bug occur?
+    validations:
+      required: false
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What exactly is broken?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution
+      description: How was / should this bug be fixed?
+    validations:
+      required: false
+
+  - type: textarea
+    id: commits
+    attributes:
+      label: Related Commits
+      description: Links to related commits
+    validations:
+      required: false
+
+  - type: textarea
+    id: done
+    attributes:
+      label: Done Criteria
+      description: How to verify the fix?
+    validations:
+      required: false
